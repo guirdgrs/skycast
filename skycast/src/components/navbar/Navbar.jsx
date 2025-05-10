@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CloudSun, MapPin, Home, Info, Sun, Moon } from "lucide-react";
+import { navbarAnimation } from "../utils/motionConfig";
 
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -20,9 +21,7 @@ function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 60 }}
+      {...navbarAnimation}
       className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md p-4 sticky top-0 z-50">
 
       <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -55,7 +54,7 @@ function Navbar() {
           className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
 
           {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-          
+
         </button>
       </div>
     </motion.nav>
