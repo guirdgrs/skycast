@@ -15,7 +15,7 @@ function Navbar() {
 // Navigation items
   const navItems = [
     { name: "Home", icon: <Home size={18} />, href: "/" },
-    { name: "Weather", icon: <CloudSun size={18} />, href: "/weather" },
+    { name: "Forecast", icon: <CloudSun size={18} />, href: "/forecast" },
     { name: "Maps", icon: <MapPin size={18} />, href: "/maps" },
     { name: "About", icon: <Info size={18} />, href: "/about" },
   ];
