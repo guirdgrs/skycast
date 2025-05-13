@@ -64,7 +64,7 @@ function App (){
 
                 const apiKey = "fad766a91179faefd351fa6b913315e6";
 
-                const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+                const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
                 
 
                 try {
@@ -87,11 +87,14 @@ function App (){
     if (!data) return <p>Loading...</p>
 
     return (
-        <div>
-            {/* <Navbar></Navbar> */}
-            <h2>City: {data.name}</h2>
-            <p>Temperature: {data.main.temp}</p>
-            <p>Weather: {data.weather[0].description}</p>
+        <div className="flex flex-col items-center justify-center h-screen">
+            <Navbar></Navbar>
+
+            <div className="">
+                <h2>Weather: {data.name}</h2>
+                <p>Temperature: {data.main.temp} °C</p>
+                <p>Weather: {data.weather[0].description}</p>
+            </div>
         </div>
     )
 
