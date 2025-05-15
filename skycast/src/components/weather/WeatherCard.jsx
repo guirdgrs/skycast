@@ -12,7 +12,7 @@ function WeatherCard ({data}) {
         <motion.div
         initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
-        classname="bg-blue-100 dark:bg-blue-900 text-gray-800 dark:text-white p-6 rounded-2xl shadow-md flex items-center justify between">
+        className="bg-blue-100 dark:bg-blue-900 text-gray-800 dark:text-white p-6 rounded-2xl shadow-md flex items-center justify center">
             <div>
                 
                 <h2
