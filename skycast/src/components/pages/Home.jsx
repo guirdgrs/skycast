@@ -1,6 +1,7 @@
 import Navbar from "../navbar/Navbar";
 import WeatherCard from "../weather/WeatherCard";
 import ForecastList from "../forecast/ForecastList";
+import Loading from "../utils/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -15,7 +16,13 @@ function App (){
     // In case of location error
     const [locationError, setLocationError] = useState(false);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
+
+        // Setting the loading to true
+        setLoading(true);
+        
         // Getting the current location using the JS
         navigator.geolocation.getCurrentPosition(
             async (position) => {
@@ -59,6 +66,9 @@ function App (){
                 // In case of error shows an alert (WILL HAVE TO CHANGE)
                 } catch (error) {
                     console.error("An error occurred:", error);
+                } finally {
+                    // Setting the loading to false
+                    setLoading(false);
                 }
             },
             (error) => {
@@ -72,9 +82,13 @@ function App (){
     return (
         <div className="max-w-4xl mx-auto p-4 space-y-8">
 
-            {/* <Navbar/> */}
-
-            {locationError ? (
+            {loading ? (
+                
+                <div className="flex items-center justify-center z-50">
+                    <Loading />
+                </div>
+                
+            ) : locationError ? (
                 <p className="text-red-500 text-center">
                     Unable to access your location. Please allow location access.
                 </p>
@@ -84,6 +98,7 @@ function App (){
                     {forecast.length > 0 && <ForecastList data={forecast} />}
                 </>
             )}
+
         </div>
     )
 
