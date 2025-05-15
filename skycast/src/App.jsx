@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Home from './components/pages/Home'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FavIconManager from './components/utils/FavIconManager'
+import ForecastDetails from './components/forecast/ForecastDetails';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +13,7 @@ function App() {
       <FavIconManager />
       <Routes>
         <Route path='/' element={<Home />}/>
+        <Route path='/forecast/:timestamp' element={<ForecastDetails/>}/>
       </Routes>
     </Router>
   )
