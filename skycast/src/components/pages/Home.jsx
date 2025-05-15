@@ -16,6 +16,8 @@ function App (){
     const [locationError, setLocationError] = useState(false);
 
     useEffect(() => {
+        console.log("Forecast data", forecast)
+
         // Getting the current location using the JS
         navigator.geolocation.getCurrentPosition(
             async (position) => {
@@ -32,16 +34,28 @@ function App (){
 
                 try {
                     // Getting the weather data
-                    const [weatherRes, forecastRes] = await Promise.all([
+                    const [weatherRes] = await Promise.all([
                         // Actual weather
                         axios.get(weatherURL),
                         // Forecast weather
-                        axios.get(forecastURL),
+                        // axios.get(forecastURL),
                     ]);
+
+                    const forecastRes = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
+                    params: {
+                        lat: latitude,
+                        lon: longitude,
+                        appid: apiKey,
+                        units: "metric"
+                        }
+                    });
+
+                    console.log("API forecast raw:", forecastRes.data);
+                    setForecast(forecastRes.data.list || []);
 
                     // Setting the state with the data
                     setWeatherData(weatherRes.data);
-                    setForecast(forecastRes.data.list);
+                    // setForecast(forecastRes.data.list);
 
                 // In case of error shows an alert (WILL HAVE TO CHANGE)
                 } catch (error) {
