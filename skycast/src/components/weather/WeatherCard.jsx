@@ -27,7 +27,7 @@ function WeatherCard ({data}) {
             <img 
             src={`http://openweathermap.org/img/wn/${icon}@2x.png`} 
             alt={weather[0].description} 
-            className="w-20 h-20 object-contain"/>
+            className="w-20 h-40"/>
         </motion.div>
     )
 }
