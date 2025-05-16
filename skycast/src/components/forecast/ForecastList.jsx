@@ -23,18 +23,22 @@ function ForecastList ({data}) {
         animate={{opacity: 1, y: 0}}
         className="space-y-2">
 
-            <h3 className="text-lg font-semibold">Upcoming Forecast</h3>
+            <h3 className="text-lg font-semibold text-center">Upcoming Forecast</h3>
 
-            <motion.div
-            className="flex overflow-x-auto gap-4 pb-2 hide-scrollbar">
+            <hr className="mt-4"/>
+
+            <div
+            className="flex overflow-x-auto gap-4 pb-2 mt-6">
                 {daily.map((item, idx) => {
                     // Formatting the date * 1000 is to convert from seconds to milliseconds
                     const date = new Date(item.dt * 1000);
+                    // Receiving the weekday and storing it as long
                     const weekday = date.toLocaleDateString("en-US", {
                         weekday: "long",
                 });
 
-                const dayOfMonth = date.getDate();
+                // In case we need the day of the month
+                // const dayOfMonth = date.getDate();
                 
                 {/* Adding a link to each day */}
                 return (
@@ -49,7 +53,10 @@ function ForecastList ({data}) {
                         <Link
                         to={`/forecast/${item.dt}`}
                         key={idx}
-                        className="min-w-[120px] bg-white dark:bg-blue-700 rounded-xl p-3 shadow-yellow-600 shadow-md transition-colors cursor-pointer">
+                        className="min-w-[120px] dark:bg-blue-700 rounded-xl p-3 shadow-yellow-600 shadow-md cursor-pointer
+                        hover:bg-yellow-500 hover:shadow-blue-600
+                        hover:border-2 hover:border-blue-600 
+                        transition-discrete transition-colors">
 
                             <motion.div
                             {...hoverAnimation}>
@@ -75,9 +82,7 @@ function ForecastList ({data}) {
                 </div>
                 )
             })}
-
-            </motion.div>
-
+            </div>
         </motion.div>
         </AnimatePresence>
     )
