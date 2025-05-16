@@ -8,3 +8,8 @@ export const hoverAnimation = {
     whileHover: { scale: 1.1 },
     transition: { type: "spring", stiffness: 160 }
 }
+
+export const entryAnimation = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+}
