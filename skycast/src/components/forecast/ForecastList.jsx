@@ -29,32 +29,50 @@ function ForecastList ({data}) {
             className="flex overflow-x-auto gap-4 pb-2 hide-scrollbar">
                 {daily.map((item, idx) => {
                     // Formatting the date * 1000 is to convert from seconds to milliseconds
-                    console.log("Forecast item: ", item)
-                    const date = new Date(item.dt * 1000).toLocaleDateString("en-US", {
-                        weekday: "short",
-                        month: "short",
-                        day: "numeric",
+                    const date = new Date(item.dt * 1000);
+                    const weekday = date.toLocaleDateString("en-US", {
+                        weekday: "long",
                 });
+
+                const dayOfMonth = date.getDate();
                 
                 {/* Adding a link to each day */}
                 return (
-                    <Link
-                    to={`/forecast/${item.dt}`}
+
+                    <div 
                     key={idx}
-                    className="min-w-[120px] bg-white dark:bg-blue-700 rounded-xl p-3 shadow-yellow-400 shadow-md transition-colors cursor-pointer">
+                    className="flex flex-col items-center min-w-[120px] select-none">
 
-                        <motion.div
-                        {...hoverAnimation}>
-                            <img 
-                            src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`} 
-                            alt="weather icon" 
-                            className="w-10 h-10 mx-auto"/>
+                        {/* Weekday */}
+                        <p className="mb-1 text-bold font-medium text-black">{weekday}</p>
 
-                            <p className="text-center text-white text-bold">
-                                {Math.round(item.main.temp)}°C
-                            </p>
-                        </motion.div>
-                    </Link>
+                        <Link
+                        to={`/forecast/${item.dt}`}
+                        key={idx}
+                        className="min-w-[120px] bg-white dark:bg-blue-700 rounded-xl p-3 shadow-yellow-600 shadow-md transition-colors cursor-pointer">
+
+                            <motion.div
+                            {...hoverAnimation}>
+
+                                {/* Day of the month */}
+
+                               {/* <p className="text-center text-white">
+                                    Day {dayOfMonth}
+                                </p>
+                                
+                                <hr className="mt-2 rounded-2xl"/> */}
+                                
+                                <img 
+                                src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`} 
+                                alt="weather icon" 
+                                className="w-10 h-10 mx-auto"/>
+
+                                <p className="text-center text-white text-sm">
+                                    {Math.round(item.main.temp)}°C
+                                </p>
+                            </motion.div>
+                        </Link>
+                </div>
                 )
             })}
 
