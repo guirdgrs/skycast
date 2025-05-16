@@ -27,25 +27,25 @@ function ForecastList ({data}) {
 
             <hr className="mt-4"/>
 
-            <div
-            className="flex overflow-x-auto gap-4 pb-2 mt-6">
-                {daily.map((item, idx) => {
-                    // Formatting the date * 1000 is to convert from seconds to milliseconds
-                    const date = new Date(item.dt * 1000);
-                    // Receiving the weekday and storing it as long
-                    const weekday = date.toLocaleDateString("en-US", {
-                        weekday: "long",
-                });
+            <div className="w-full overflow-x-auto hide-scrollbar">
+                <div className="flex justify-center gap-4 pb-2 mt-6 w-max mx-auto">
+                    {daily.map((item, idx) => {
+                        // Formatting the date * 1000 is to convert from seconds to milliseconds
+                        const date = new Date(item.dt * 1000);
+                        // Receiving the weekday and storing it as long
+                        const weekday = date.toLocaleDateString("en-US", {
+                            weekday: "long",
+                    });
 
-                // In case we need the day of the month
-                // const dayOfMonth = date.getDate();
-                
+                    // In case we need the day of the month
+                    // const dayOfMonth = date.getDate();
+                    
                 {/* Adding a link to each day */}
                 return (
 
                     <div 
                     key={idx}
-                    className="flex flex-col items-center min-w-[120px] select-none">
+                    className="flex flex-col items-center select-none">
 
                         {/* Weekday */}
                         <p className="mb-1 text-bold font-medium text-black">{weekday}</p>
@@ -83,6 +83,7 @@ function ForecastList ({data}) {
                 )
             })}
             </div>
+        </div>
         </motion.div>
         </AnimatePresence>
     )
