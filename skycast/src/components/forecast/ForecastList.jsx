@@ -1,20 +1,9 @@
 import { AnimatePresence, hover, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { hoverAnimation, entryAnimation } from "../utils/motionConfig";
-
-import  {
-    Sun,
-    Cloud,
-    CloudRain,
-    CloudSnow,
-    Zap,
-    Wind,
-    Droplet,
-    CloudDrizzle,
-    CloudFog,
-    CloudSun,
-    CloudMoon
-} from "lucide-react";
+import weatherIconsMap from "../utils/weatherIcons";
+import WeatherIconRenderer from "../icons/WeatherIconRenderer";
+import { Sun } from "lucide-react";
 
 function ForecastList ({data}) {
 
@@ -28,25 +17,6 @@ function ForecastList ({data}) {
             daily.push(item);
             dateSeen.add(date);
         }
-    }
-
-    // Mapping the weather icons
-    const weatherIconsMap = {
-        Clear: Sun,
-        Clouds: Cloud,
-        Rain: CloudRain,
-        Drizzle: CloudDrizzle,
-        Snow: CloudSnow,
-        Thunderstorm: Zap,
-        Mist: CloudFog,
-        Smoke: CloudFog,
-        Haze: CloudFog,
-        Dust: CloudFog,
-        Fog: CloudFog,
-        Sand: CloudFog,
-        Ash: CloudFog,
-        Squall: Wind,
-        Tornado: Wind
     }
 
     return (
@@ -105,7 +75,10 @@ function ForecastList ({data}) {
                                 
                                 <hr className="mt-2 rounded-2xl"/> */}
 
-                                <WeatherIcon className="w-10 h-10 mx-auto text-yellow-400 group-hover:text-blue-600" />
+                                <WeatherIconRenderer
+                                condition={weatherMain}
+                                size={40}
+                                className="mx-auto text-yellow-400 group-hover:text-blue-600"/>
 
                                 <p className="text-center text-white text-sm mt-2 group-hover:text-blue-600">
                                     {Math.round(item.main.temp)}°C
