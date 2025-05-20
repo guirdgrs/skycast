@@ -9,6 +9,11 @@ export const hoverAnimation = {
     transition: { type: "spring", stiffness: 160 }
 }
 
+export const hoverSmallAnimation = {
+    whileHover: { scale: 1.03 },
+    transition: { type: "spring", stiffness: 120 }
+}
+
 export const entryAnimation = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
