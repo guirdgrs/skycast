@@ -78,7 +78,7 @@ function ForecastList ({data}) {
                                 <WeatherIconRenderer
                                 condition={weatherMain}
                                 size={40}
-                                className="mx-auto text-yellow-400 group-hover:text-blue-600"/>
+                                className="mx-auto text-yellow-400 fill-yellow-400 group-hover:text-blue-600 group-hover:fill-blue-600"/>
 
                                 <p className="text-center text-white text-sm mt-2 group-hover:text-blue-600">
                                     {Math.round(item.main.temp)}°C
