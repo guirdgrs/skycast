@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { useState } from "react";
 import WeatherIconRenderer from "../icons/WeatherIconRenderer";
+import { hoverSmallAnimation } from "../utils/motionConfig";
 
 // WeatherCard starts by receiving the data from the parent component
 function WeatherCard ({data}) {
@@ -16,23 +17,24 @@ function WeatherCard ({data}) {
         <motion.div
         initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
-        className="bg-blue-100 dark:bg-blue-700 text-gray-800 dark:text-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-center text-center space-y-4">
+        className="bg-blue-100 dark:bg-blue-700 dark:text-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-center text-center space-y-4">
             <div>
                 
-                <button
+                <motion.button
                 onClick={() => setShowModal(true)}
-                className="hover:underline flex items-center gap-2 text-xl font-semibold">
+                className="flex items-center gap-2 text-3xl font-semibold hover:bg-yellow-400 hover:text-blue-600 p-2 px-4 rounded-full transition-discrete transition-colors cursor-pointer"
+                {...hoverSmallAnimation}>
                     <MapPin size={20} /> {name}
-                </button>
+                </motion.button>
 
                 <p className="text-xl capitalize">{weather[0].description}</p>
-                <p className="text-4xl font-bold">{Math.round(main.temp)}°C</p>
+                <p className="text-4xl font-bold mt-3">{Math.round(main.temp)}°C</p>
             </div>
 
             <WeatherIconRenderer
             condition={weather[0].main}
             size={64}
-            className="text-blue-500 dark:text-blue-300"/>
+            className="text-yellow-400 fill-yellow-400"/>
 
 
             {showModal && (
