@@ -38,16 +38,18 @@ function WeatherCard ({data}) {
 
 
             {showModal && (
-                <div className="fixed inset-0 backdrop-blur-lg bg-blue-700/30 flex items-center justify-center z-50">
-                    <div className="bg-yellow-500 p-6 rounded-xl max-w-md w-full space-y-4 relative shadow-lg text-blue-700">
+                <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50 ">
+                    <div className="bg-blue-700 p-6 rounded-xl max-w-md w-full space-y-4 relative shadow-md text-yellow-400 border-2 border-yellow-400 shadow-yellow-400">
 
                         <button
                             onClick={() => setShowModal(false)}
-                            className="absolute top-2 right-3 text-blue-700 hover:text-red-500">
+                            className="absolute top-2 right-3 text-yellow-400 hover:text-red-500 hover:bg-red-400 p-1 px-2 rounded cursor-pointer">
                             ✕
                         </button>
 
                     <h3 className="text-lg font-semibold">Nearby Cities</h3>
+
+                    <hr />
 
                     {/* Simulating a list of nearby cities */}
                     <ul className="text-sm space-y-1">
@@ -59,7 +61,7 @@ function WeatherCard ({data}) {
                     <input
                         type="text"
                         placeholder="Search for another location..."
-                        className="w-full mt-4 p-2 rounded bg-blue-700 text-white placeholder-gray-300"/>
+                        className="w-full mt-4 p-2 rounded bg-yellow-400 text-blue-600 placeholder-blue-600"/>
                     </div>
                 </div>
 )}
