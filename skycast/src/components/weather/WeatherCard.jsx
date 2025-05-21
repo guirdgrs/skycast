@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import WeatherIconRenderer from "../icons/WeatherIconRenderer";
 import { hoverSmallAnimation } from "../utils/motionConfig";
 
@@ -12,6 +12,31 @@ function WeatherCard ({data}) {
     const icon = weather[0].icon;
 
     const [showModal, setShowModal] = useState(false);
+    const modalRef = useRef();
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if(modalRef.current && !modalRef.current.contains(event.target)) {
+                setShowModal(false);
+            }
+        }
+
+        function handleKeyDown(event) {
+            if(event.key === "Escape") {
+                setShowModal(false);
+            }
+        }
+
+        if (showModal) {
+            document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("keydown", handleKeyDown);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleKeyDown);
+        }
+    })
 
     return (
         <motion.div
@@ -39,7 +64,9 @@ function WeatherCard ({data}) {
 
             {showModal && (
                 <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50 ">
-                    <div className="bg-blue-700 p-6 rounded-xl max-w-md w-full space-y-4 relative shadow-md text-yellow-400 border-2 border-yellow-400 shadow-yellow-400">
+                    <div 
+                    ref={modalRef}
+                    className="bg-blue-700 p-6 rounded-xl max-w-md w-full space-y-4 relative shadow-md text-yellow-400 border-2 border-yellow-400 shadow-yellow-400">
 
                         <button
                             onClick={() => setShowModal(false)}
