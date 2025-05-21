@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import WeatherIconRenderer from "../icons/WeatherIconRenderer";
-import { fadeInAnimation, fadeSlideAnimation, hoverSmallAnimation, modalAnimation } from "../utils/motionConfig";
+import { fadeSlideAnimation, hoverSmallAnimation, modalAnimation } from "../utils/motionConfig";
 
 // WeatherCard starts by receiving the data from the parent component
 function WeatherCard ({data}) {
@@ -72,20 +72,15 @@ function WeatherCard ({data}) {
 
                         <button
                             onClick={() => setShowModal(false)}
-                            className="absolute top-2 right-3 text-yellow-400 hover:text-red-500 hover:bg-red-400 p-1 px-2 rounded cursor-pointer">
+                            className="absolute top-2 right-3 text-yellow-400 hover:text-blue-600 hover:bg-yellow-400 p-1 px-2 rounded cursor-pointer">
                             ✕
                         </button>
 
-                    <h3 className="text-lg font-semibold">Nearby Cities</h3>
+                    <h3 className="text-lg font-semibold">Current City</h3>
+
+                    <p className="text-xl font-bold">{name}</p>
 
                     <hr />
-
-                    {/* Simulating a list of nearby cities */}
-                    <ul className="text-sm space-y-1">
-                        <li>City A</li>
-                        <li>City B</li>
-                        <li>City C</li>
-                    </ul>
 
                     <input
                         type="text"
