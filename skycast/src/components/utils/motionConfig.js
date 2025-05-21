@@ -18,3 +18,27 @@ export const entryAnimation = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
 }
+
+export const modalAnimation = {
+  initial: { opacity: 0, scale: 0.9, y: 30 },
+  animate: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.3 } },
+  exit: { opacity: 0, scale: 0.9, y: 30, transition: { duration: 0.2 } },
+};
+
+export const fadeInAnimation = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+export const fadeOutAnimation = {
+  initial: { opacity: 1 },
+  animate: { opacity: 0 },
+  exit: { opacity: 1 },
+};
+
+export const fadeSlideAnimation = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 20 },
+};
