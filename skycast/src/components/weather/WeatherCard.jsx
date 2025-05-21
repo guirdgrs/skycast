@@ -1,15 +1,14 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import WeatherIconRenderer from "../icons/WeatherIconRenderer";
-import { hoverSmallAnimation } from "../utils/motionConfig";
+import { fadeInAnimation, fadeSlideAnimation, hoverSmallAnimation, modalAnimation } from "../utils/motionConfig";
 
 // WeatherCard starts by receiving the data from the parent component
 function WeatherCard ({data}) {
 
     // Destructuring the data into variables
     const {name, weather, main} = data;
-    const icon = weather[0].icon;
 
     const [showModal, setShowModal] = useState(false);
     const modalRef = useRef();
@@ -61,12 +60,15 @@ function WeatherCard ({data}) {
             size={64}
             className="text-yellow-400 fill-yellow-400"/>
 
-
+            <AnimatePresence>
             {showModal && (
-                <div className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50 ">
-                    <div 
+                <motion.div 
+                className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-50"
+                {...fadeSlideAnimation}>
+                    <motion.div 
                     ref={modalRef}
-                    className="bg-blue-700 p-6 rounded-xl max-w-md w-full space-y-4 relative shadow-md text-yellow-400 border-2 border-yellow-400 shadow-yellow-400">
+                    className="bg-blue-700 p-6 rounded-xl max-w-md w-full space-y-4 relative shadow-md text-yellow-400 border-2 border-yellow-400 shadow-yellow-400"
+                    {...modalAnimation}>
 
                         <button
                             onClick={() => setShowModal(false)}
@@ -89,10 +91,10 @@ function WeatherCard ({data}) {
                         type="text"
                         placeholder="Search for another location..."
                         className="w-full mt-4 p-2 rounded bg-yellow-400 text-blue-600 placeholder-blue-600"/>
-                    </div>
-                </div>
-)}
-
+                    </motion.div>
+                </motion.div>
+            )}
+            </AnimatePresence>
         </motion.div>
     )
 }
