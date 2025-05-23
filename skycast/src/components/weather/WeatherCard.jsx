@@ -41,7 +41,7 @@ function WeatherCard ({data}) {
         <motion.div
         initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
-        className="bg-blue-100 dark:bg-blue-700 dark:text-white p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-4 shadow-md shadow-yellow-400">
+        className="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 dark:from-blue-700 dark:via-blue-600 dark:to-blue-500 text-white p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-4 shadow-md shadow-yellow-400">
             <div>
                 <motion.button
                 onClick={() => setShowModal(true)}

@@ -59,10 +59,11 @@ function ForecastList ({data}) {
                         <Link
                         to={`/forecast/${item.dt}`}
                         key={idx}
-                        className="group min-w-[120px] dark:bg-blue-700 rounded-xl p-3 shadow-yellow-600 shadow-md cursor-pointer
-                        hover:bg-yellow-500 hover:shadow-blue-600
-                        hover:border-2 hover:border-blue-600 
-                        transition-discrete transition-colors">
+                        className="group min-w-[120px] 
+                        bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 
+                        rounded-xl p-3 shadow-yellow-600 shadow-md cursor-pointer
+                      hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600
+                        hover:border-2 hover:border-blue-600 ">
 
                             <motion.div
                             {...hoverAnimation}>
