@@ -41,14 +41,13 @@ function WeatherCard ({data}) {
         <motion.div
         initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
-        className="bg-blue-100 dark:bg-blue-700 dark:text-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-center text-center space-y-4">
+        className="bg-blue-100 dark:bg-blue-700 dark:text-white p-6 rounded-2xl flex flex-col items-center justify-center text-center space-y-4 shadow-md shadow-yellow-400">
             <div>
-                
                 <motion.button
                 onClick={() => setShowModal(true)}
-                className="flex items-center gap-2 text-3xl font-semibold hover:bg-yellow-400 hover:text-blue-600 p-2 px-4 rounded-full transition-discrete transition-colors cursor-pointer"
+                className="flex items-center bg-blue-500 gap-2 text-3xl font-semibold hover:bg-yellow-400 hover:text-blue-600 p-2 px-4 rounded-full transition-discrete transition-colors cursor-pointer"
                 {...hoverSmallAnimation}>
-                    <MapPin size={20} /> {name}
+                        <MapPin size={20} /> {name}
                 </motion.button>
 
                 <p className="text-xl capitalize">{weather[0].description}</p>
