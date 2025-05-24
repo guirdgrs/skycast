@@ -57,7 +57,7 @@ function WeatherCard ({data}) {
             <WeatherIconRenderer
             condition={weather[0].main}
             size={64}
-            className="text-yellow-400 fill-yellow-400"/>
+            className="hover:text-yellow-500 hover:fill-yellow-400 transition-colors"/>
 
             <AnimatePresence>
             {showModal && (

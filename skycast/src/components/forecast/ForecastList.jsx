@@ -62,7 +62,7 @@ function ForecastList ({data}) {
                         className="group min-w-[120px] 
                         bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 
                         rounded-xl p-3 shadow-yellow-600 shadow-md cursor-pointer
-                      hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600
+                        hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600
                         hover:border-2 hover:border-blue-600 ">
 
                             <motion.div
@@ -79,7 +79,7 @@ function ForecastList ({data}) {
                                 <WeatherIconRenderer
                                 condition={weatherMain}
                                 size={40}
-                                className="mx-auto text-yellow-400 fill-yellow-400 group-hover:text-blue-600 group-hover:fill-blue-600"/>
+                                className="mx-auto group-hover:text-blue-700 group-hover:fill-blue-600 transition-colors"/>
 
                                 <p className="text-center text-white text-sm mt-2 group-hover:text-blue-600">
                                     {Math.round(item.main.temp)}°C
