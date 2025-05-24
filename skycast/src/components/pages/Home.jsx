@@ -4,79 +4,46 @@ import ForecastList from "../forecast/ForecastList";
 import Loading from "../utils/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import useWeatherData from "../hooks/useWeatherData";
 
 function App (){
 
-    // Creating the state to store the weather data
-    const [weatherData, setWeatherData] = useState(null);
+    // Receiving the data from the hook
+    const {weatherData, loading, error} = useWeatherData();
 
     // Same but for forecast
     const [forecast, setForecast] = useState([]);
 
-    // In case of location error
-    const [locationError, setLocationError] = useState(false);
-
-    const [loading, setLoading] = useState(true);
-
+    //Forecast is fetched only when weatherData is available
     useEffect(() => {
+    async function fetchForecast() {
+      if (!weatherData) return;
 
-        // Setting the loading to true
-        setLoading(true);
-        
-        // Getting the current location using the JS
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                // Getting the latitude and longitude (coordinates) of the user
-                const { latitude, longitude } = position.coords;
+      const { coord } = weatherData;
+      const apiKey = "fad766a91179faefd351fa6b913315e6";
 
-                // The key was generated from OpenWeatherMap
-                const apiKey = "fad766a91179faefd351fa6b913315e6";
+      try {
+        const res = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
+          params: {
+            lat: coord.lat,
+            lon: coord.lon,
+            appid: apiKey,
+            units: "metric"
+          }
+        });
 
-                // Mounting the URL withe the coordinates
-                const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-                
-                const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+        console.log("API forecast raw:", res.data);
+        setForecast(res.data.list || []);
+      } catch (error) {
+        console.error("An error occurred while fetching forecast:", error);
+      }
+    }
 
-                try {
-                    // Getting the weather data
-                    const [weatherRes] = await Promise.all([
-                        // Actual weather
-                        axios.get(weatherURL),
-                        // Forecast weather
-                        // axios.get(forecastURL),
-                    ]);
+    fetchForecast();
+  }, [weatherData]);
 
-                    // Trying another method to get the forecast
-                    const forecastRes = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
-                    params: {
-                        lat: latitude,
-                        lon: longitude,
-                        appid: apiKey,
-                        units: "metric"
-                        }
-                    });
-
-                    console.log("API forecast raw:", forecastRes.data);
-                    setForecast(forecastRes.data.list || []);
-
-                    // Setting the state with the data
-                    setWeatherData(weatherRes.data);
-                    // setForecast(forecastRes.data.list);
-
-                // In case of error shows an alert (WILL HAVE TO CHANGE)
-                } catch (error) {
-                    console.error("An error occurred:", error);
-                } finally {
-                    // Setting the loading to false
-                    setLoading(false);
-                }
-            },
-            (error) => {
-                console.error("Error getting location:", error);
-                setLocationError(true);
-            }
-        );
-    }, []);
+    if (loading) return <div className="flex items-center justify-center"><Loading /></div>
+    if (error) return <p>An error has occurred</p>
 
 
     return (
@@ -88,7 +55,7 @@ function App (){
                     <Loading />
                 </div>
                 
-            ) : locationError ? (
+            ) : error ? (
                 <p className="text-red-500 text-center">
                     Unable to access your location. Please allow location access.
                 </p>
