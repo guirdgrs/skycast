@@ -6,47 +6,27 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useWeatherData from "../hooks/useWeatherData";
 import Error from "../utils/Error";
+import useForecastData from "../hooks/useForecastData";
 
 function App (){
 
     // Receiving the data from the hook
-    const {weatherData, loading, error} = useWeatherData();
+    const {weatherData, loading: weatherLoading, error: weatherError} = useWeatherData();
 
-    // Same but for forecast
-    const [forecast, setForecast] = useState([]);
+    const { forecast, loading: forecastLoading, error: forecastError } = useForecastData(weatherData);
 
-    //Forecast is fetched only when weatherData is available
-    useEffect(() => {
-    async function fetchForecast() {
-      if (!weatherData) return;
 
-      const { coord } = weatherData;
-      const apiKey = "fad766a91179faefd351fa6b913315e6";
-
-      try {
-        const res = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
-          params: {
-            lat: coord.lat,
-            lon: coord.lon,
-            appid: apiKey,
-            units: "metric"
-          }
-        });
-
-        console.log("API forecast raw:", res.data);
-        setForecast(res.data.list || []);
-      } catch {
-        <Error
-        title="Unable to fetch forecast"
-        message="An error occurred while fetching the forecast. Please try again later." />
-      }
+    if (weatherLoading || forecastLoading) {
+      return <div className="flex items-center justify-center"><Loading /></div>
     }
 
-    fetchForecast();
-  }, [weatherData]);
+    if (weatherError) {
+      return <Error title="Unable to fetch weather" message="An error occurred while fetching the weather. Please try again later."/>
+    }
 
-    if (loading) return <div className="flex items-center justify-center"><Loading /></div>
-    if (error) return <Error title="Unable to fetch weather" message="An error occurred while fetching the weather. Please try again later."/>
+    if (forecastError) {
+      return <Error title="Unable to fetch forecast" message="An error occurred while fetching the forecast. Please try again later."/>
+    }
 
 
     return (
@@ -54,7 +34,7 @@ function App (){
 
         {weatherData && <WeatherCard data={weatherData} />}
         {forecast.length > 0 && <ForecastList data={forecast} />}
-        
+
       </div>
     )
 
