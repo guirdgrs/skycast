@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Error from "../utils/Error";
 
-function useForecastData(weatherData){
+function useForecastData(coords){
     const [forecast, setForecast] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
     async function fetchForecast() {
-      if (!weatherData) return;
+      if (!coords) return;
 
-      const { coord } = weatherData;
+      const { lat, lon } = coords;
       const apiKey = "fad766a91179faefd351fa6b913315e6";
 
       setLoading(true);
@@ -20,25 +20,26 @@ function useForecastData(weatherData){
       try {
         const res = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
           params: {
-            lat: coord.lat,
-            lon: coord.lon,
+            lat,
+            lon,
             appid: apiKey,
             units: "metric"
           }
         });
 
-        console.log("API forecast raw:", res.data);
-        setForecast(res.data.list || []);
+        setForecast(res.data?.list || []);
+
       } catch(error) {
         console.log("Error fetching forecast:", error);
         setError(error.message);
+
       } finally {
         setLoading(false);
       }
     }
 
     fetchForecast();
-  }, [weatherData]);
+  }, [coords]);
 
   return {forecast, loading, error};
 

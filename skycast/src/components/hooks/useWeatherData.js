@@ -54,8 +54,11 @@ const useWeatherData = () => {
 
             const data = await res.json();
             setWeatherData(data);
+            return data;
+
         } catch (error) {
             setError(error.message);
+            throw error;
         } finally {
             setLoading(false);
         }
