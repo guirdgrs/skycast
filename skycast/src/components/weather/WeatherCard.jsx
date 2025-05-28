@@ -9,16 +9,14 @@ import Loading from "../utils/Loading";
 import Error from "../utils/Error";
 
 // WeatherCard starts by receiving the data from the parent component
-function WeatherCard () {
+function WeatherCard ({weatherData, loading, error, onCitySelect}) {
 
     // State for the modal
     const [showModal, setShowModal] = useState(false);
 
-    const  {weatherData, setWeatherData,  fetchWeatherByCoordinates, loading, error} = useWeatherData();
-
     if (!weatherData) return null;
 
-    const {name, main, weather} = weatherData;
+    const {name, main, weather} = weatherData; 
 
     return (
         <motion.div
@@ -46,21 +44,14 @@ function WeatherCard () {
             isOpen={showModal}
             onClose={() => setShowModal(false)}
             cityName={name}
-
-            onCitySelect={ async (city) => {
-                try {
-                   await fetchWeatherByCoordinates(city.lat, city.lon);
+            onCitySelect={async (city) => {
+                await onCitySelect(city);
                     setShowModal(false);
-                } catch (error) {
-                    console.error("Error fetching weather data:", error);
-                }
-            }}
+                }}
             />
 
         </motion.div>
     )
 }
-
-
 
 export default WeatherCard;
