@@ -56,7 +56,15 @@ function CityModal({isOpen, onClose, cityName, onCitySelect, onUseCurrentLocatio
                     }
                 });
 
-                setSuggestions(res.data);
+                const uniqueCities = res.data.filter((city, index, self) => 
+                    index === self.findIndex((c) => (
+                        c.name === city.name &&
+                        (c.state || '') === (city.state || '') &&
+                        c.country === city.country
+                    ))
+                );
+
+                setSuggestions(uniqueCities);
             } catch (error) {
                 console.log(error);
             } finally {
