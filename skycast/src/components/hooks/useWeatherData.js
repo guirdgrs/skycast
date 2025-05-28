@@ -12,7 +12,7 @@ const fallbackCities = {
     GB: "London",
 };
 
-const API_KEY = "fad766a91179faefd351fa6b913315e6";
+const apiKey = "fad766a91179faefd351fa6b913315e6";
 
 const useWeatherData = () => {
     const [weatherData, setWeatherData] = useState(null);
@@ -20,9 +20,13 @@ const useWeatherData = () => {
     const [error, setError] = useState(null);
 
     const fetchWeatherByCity = async(city) => {
+
+        setLoading(true);
+        setError(null);
+
         try {
             const res = await fetch (
-                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
             );
 
             if (!res.ok) throw new Error("City not found");
@@ -37,9 +41,13 @@ const useWeatherData = () => {
     };
 
     const fetchWeatherByCoordinates = async(latitude, longitude) => {
+
+        setLoading(true);
+        setError(null);
+
         try {
             const res = await fetch (
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
             );
 
             if (!res.ok) throw new Error("Location not found");
@@ -59,7 +67,7 @@ const useWeatherData = () => {
             const data = await res.json();
 
             return data.countryCode;
-        } catch (error) {
+        } catch {
             return null;
         }
     };
@@ -68,19 +76,20 @@ const useWeatherData = () => {
         navigator.geolocation.getCurrentPosition(
             (pos) => {
                 const {latitude, longitude} = pos.coords;
-                fetchWeatherByCoordinates(latitude, longitude);
+                fetchWeatherByCoordinates(latitude, longitude)
+
             },
             
             async () => {
                 const countryCode = await fetchCountryByIP();
                 const fallbackCity = fallbackCities[countryCode] || "New York";
 
-                fetchWeatherByCity(fallbackCity);
+                fetchWeatherByCity(fallbackCity)
             }
         );
     }, []);
 
-    return {weatherData, loading, error};
+    return {weatherData, setWeatherData, loading, error, fetchWeatherByCity, fetchWeatherByCoordinates};
 };
 
 export default useWeatherData;
