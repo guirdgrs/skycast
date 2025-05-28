@@ -1,18 +1,24 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import WeatherIconRenderer from "../icons/WeatherIconRenderer";
-import { fadeSlideAnimation, hoverSmallAnimation, modalAnimation } from "../utils/motionConfig";
+import { hoverSmallAnimation } from "../utils/motionConfig";
 import CityModal from "../modal/CityModal";
+import useWeatherData from "../hooks/useWeatherData";
+import Loading from "../utils/Loading";
+import Error from "../utils/Error";
 
 // WeatherCard starts by receiving the data from the parent component
-function WeatherCard ({data}) {
-
-    // Destructuring the data into variables
-    const {name, weather, main} = data;
+function WeatherCard () {
 
     // State for the modal
     const [showModal, setShowModal] = useState(false);
+
+    const  {weatherData, setWeatherData,  fetchWeatherByCoordinates, loading, error} = useWeatherData();
+
+    if (!weatherData) return null;
+
+    const {name, main, weather} = weatherData;
 
     return (
         <motion.div
@@ -39,7 +45,17 @@ function WeatherCard ({data}) {
             <CityModal
             isOpen={showModal}
             onClose={() => setShowModal(false)}
-            cityName={name}/>
+            cityName={name}
+
+            onCitySelect={ async (city) => {
+                try {
+                   await fetchWeatherByCoordinates(city.lat, city.lon);
+                    setShowModal(false);
+                } catch (error) {
+                    console.error("Error fetching weather data:", error);
+                }
+            }}
+            />
 
         </motion.div>
     )
